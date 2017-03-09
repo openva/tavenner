@@ -39,15 +39,18 @@ def main():
             local_file.write(f.read())
             local_file.close()
 
+        # If there's an HTTP error, record that.
         except HTTPError as e:
             sys.stdout.write(' ')
             sys.stdout.flush()
 
             errors += 1
 
+        # Increment our counter.
         i += 1
 
-        if errors >= 100:
+        # If we get 100 errors in a row, stop.
+        if errors = 100:
             break
 
         # Don't query more than once every half-second.
