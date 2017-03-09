@@ -30,20 +30,29 @@ def main():
 
         try:
             f = urlopen(req)
-            sys.stdout.write('.')
-            sys.stdout.flush()
 
-            errors = 0
-            
-            local_file = open(str(i) + '.html', 'w')
-            local_file.write(f.read())
-            local_file.close()
+            # If the content is long enough to be legitimate.
+            if f.headers['content-length'] > 590:
+                sys.stdout.write('.')
+                sys.stdout.flush()
+
+                errors = 0
+
+                # Save the file.
+                local_file = open(output_dir + '/' + str(i) + '.html', 'w')
+                local_file.write(f.read())
+                local_file.close()
+
+            # If the content is short, indicating a blank page.
+            else:
+                sys.stdout.write(' ')
+                sys.stdout.flush()
+                errors += 1
 
         # If there's an HTTP error, record that.
         except HTTPError as e:
-            sys.stdout.write(' ')
+            sys.stdout.write('X')
             sys.stdout.flush()
-
             errors += 1
 
         # Increment our counter.
