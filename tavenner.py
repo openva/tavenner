@@ -7,7 +7,13 @@ import zipfile
 import sys
 import hashlib
 
+output_dir = 'output'
+
 def main():
+
+    # Make our output directory, if it doesn't exist.
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     
     from urllib2 import Request, urlopen, HTTPError
     url_base = 'http://ethicssearch.dls.virginia.gov/ViewFormBinary.aspx?filingid='
