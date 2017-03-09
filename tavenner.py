@@ -22,6 +22,10 @@ def main():
     i = 1
     while True:
 
+        # Note the time at which we started reading this record, to make sure that we don't make
+        # more than one request per second. (Too-frequent requests result in being blocked.)
+        start_time = time.time()
+
         req = Request(url_base + str(i))
 
         try:
@@ -45,6 +49,10 @@ def main():
 
         if errors >= 100:
             break
+
+        # Don't query more than once every half-second.
+        if time.time() - start_time < 0.5:
+            time.sleep(0.5 - (time.time() - start_time))
 
 if __name__ == "__main__":
     main()
