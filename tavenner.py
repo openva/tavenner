@@ -40,7 +40,7 @@ def main():
                 errors = 0
 
                 # Save the file.
-                local_file = open(output_dir + '/' + str(i) + '.html', 'w')
+                local_file = open(output_dir + '/' + str(i).zfill(6) + '.html', 'w')
                 local_file.write(f.read())
                 local_file.close()
 
