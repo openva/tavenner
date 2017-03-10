@@ -15,12 +15,20 @@ def main():
     # Make our output directory, if it doesn't exist.
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+    else:
+        dir = os.listdir(output_dir)
+        if len(dir) > 0:
+            resume_point = int(dir[-1].replace('.html', '')) + 1
     
     from urllib2 import Request, urlopen, HTTPError
     url_base = 'http://ethicssearch.dls.virginia.gov/ViewFormBinary.aspx?filingid='
 
     errors = 0
-    i = 1
+    try:
+        i = resume_point
+    except:
+        i = 2000
+        
     while True:
 
         # Note the time at which we started reading this record, to make sure that we don't make
