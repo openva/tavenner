@@ -6,6 +6,7 @@ import errno
 import zipfile
 import sys
 import hashlib
+import time
 
 output_dir = 'output'
 
@@ -59,7 +60,7 @@ def main():
         i += 1
 
         # If we get 100 errors in a row, stop.
-        if errors = 100:
+        if errors == 100:
             break
 
         # Don't query more than once every half-second.
