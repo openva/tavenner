@@ -33,7 +33,7 @@ def main():
             f = urlopen(req)
 
             # If the content is long enough to be legitimate.
-            if f.headers['content-length'] > 590:
+            if int(f.headers['content-length']) > 590:
                 sys.stdout.write('.')
                 sys.stdout.flush()
 
