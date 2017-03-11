@@ -72,8 +72,8 @@ def main():
             break
 
         # Don't query more than once every half-second.
-        if time.time() - start_time < 0.5:
-            time.sleep(0.5 - (time.time() - start_time))
+        if time.time() - start_time < 1:
+            time.sleep(1 - (time.time() - start_time))
 
 if __name__ == "__main__":
     main()
