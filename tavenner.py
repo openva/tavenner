@@ -21,8 +21,11 @@ def main():
             resume_point = int(dir[-1].replace('.html', '')) + 1
 
     # If we have a resume point file, resume from that number.
-    with open('.resume') as f:
-        resume_point = int(f.read())
+    try:
+        with open('.resume') as f:
+            tmp = int(f.read())
+            if (tmp > resume_point):
+                resume_point = tmp
     
     from urllib2 import Request, urlopen, HTTPError
     url_base = 'http://ethicssearch.dls.virginia.gov/ViewFormBinary.aspx?filingid='
