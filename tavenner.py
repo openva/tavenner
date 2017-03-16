@@ -19,6 +19,10 @@ def main():
         dir = os.listdir(output_dir)
         if len(dir) > 0:
             resume_point = int(dir[-1].replace('.html', '')) + 1
+
+    # If we have a resume point file, resume from that number.
+    with open('.resume') as f:
+        resume_point = int(f.read())
     
     from urllib2 import Request, urlopen, HTTPError
     url_base = 'http://ethicssearch.dls.virginia.gov/ViewFormBinary.aspx?filingid='
@@ -28,6 +32,8 @@ def main():
         i = resume_point
     except:
         i = 2050
+
+    print "Resuming at " + str(i)
         
     while True:
 
@@ -48,7 +54,8 @@ def main():
                 errors = 0
 
                 # Save the file.
-                local_file = open(output_dir + '/' + str(i).zfill(6) + '.html', 'w')
+                filename = output_dir + '/' + str(i).zfill(6) + '.html'
+                local_file = open(filename, 'w')
                 local_file.write(f.read())
                 local_file.close()
 
@@ -67,13 +74,18 @@ def main():
         # Increment our counter.
         i += 1
 
-        # If we get 100 errors in a row, stop.
-        if errors == 100:
+        # If we get 50 errors in a row, count by 10s.
+        if errors >= 50:
+            i += 9
+
+        # If we get 200 errors in a row, quit.
+        if errors == 200:
+            print "Too many consecutive errors encountered—stopping"
             break
 
-        # Don't query more than once every half-second.
-        if time.time() - start_time < 1:
-            time.sleep(1 - (time.time() - start_time))
+        # Don't query more than once every two seconds.
+        if time.time() - start_time < 2:
+            time.sleep(2 - (time.time() - start_time))
 
 if __name__ == "__main__":
     main()
