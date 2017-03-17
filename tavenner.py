@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+print "Do not run, per https://github.com/openva/tavenner/issues/11"
+sys.exit()
 import os
 import errno
 import zipfile
